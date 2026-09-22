@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Checkout{% endblock %}
+{% block content %}
+
+<section class="order-page">
+    <h1>Delivery details</h1>
+
+    <div class="order-layout">
+        <form action="{{ url_for('place_order') }}" method="POST" class="order-form">
+            <label for="customer_name">Full name</label>
+            <input type="text" id="customer_name" name="customer_name" required placeholder="Your name">
+
+            <label for="phone_number">Phone number</label>
+            <input type="tel" id="phone_number" name="phone_number" required placeholder="10-digit mobile number">
+
+            <label for="address">Delivery address</label>
+            <textarea id="address" name="address" rows="3" required placeholder="House number, street, city"></textarea>
+
+            <button type="submit" class="btn-primary btn-full">Place order — ₹{{ total }}</button>
+        </form>
+
+        <aside class="order-summary">
+            <h2>Order summary</h2>
+            {% for item in items %}
+            <div class="summary-row">
+                <span>{{ item.name }} × {{ item.quantity }}</span>
+                <span>₹{{ item.subtotal }}</span>
+            </div>
+            {% endfor %}
+            <div class="summary-row summary-total">
+                <span>Total</span>
+                <span>₹{{ total }}</span>
+            </div>
+        </aside>
+    </div>
+</section>
+
+{% endblock %}

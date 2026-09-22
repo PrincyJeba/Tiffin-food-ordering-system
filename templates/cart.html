@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Cart{% endblock %}
+{% block content %}
+
+<section class="cart-page">
+    <h1>Your cart</h1>
+
+    {% if items %}
+    <div class="receipt">
+        {% for item in items %}
+        <div class="receipt-row">
+            <div class="receipt-info">
+                <span class="receipt-emoji" aria-hidden="true">{{ item.emoji }}</span>
+                <div>
+                    <p class="receipt-name">{{ item.name }}</p>
+                    <p class="receipt-unit-price">₹{{ item.price }} each</p>
+                </div>
+            </div>
+
+            <form action="{{ url_for('update_cart') }}" method="POST" class="qty-form">
+                <input type="hidden" name="food_id" value="{{ item.id }}">
+                <button type="submit" name="action" value="decrease" class="qty-btn" aria-label="Decrease quantity">−</button>
+                <span class="qty-value">{{ item.quantity }}</span>
+                <button type="submit" name="action" value="increase" class="qty-btn" aria-label="Increase quantity">+</button>
+            </form>
+
+            <span class="receipt-subtotal">₹{{ item.subtotal }}</span>
+
+            <form action="{{ url_for('remove_from_cart') }}" method="POST">
+                <input type="hidden" name="food_id" value="{{ item.id }}">
+                <button type="submit" class="btn-remove" aria-label="Remove {{ item.name }}">Remove</button>
+            </form>
+        </div>
+        {% endfor %}
+
+        <div class="receipt-total-row">
+            <span>Total</span>
+            <span class="receipt-total">₹{{ total }}</span>
+        </div>
+    </div>
+
+    <a class="btn-primary" href="{{ url_for('order') }}">Proceed to checkout</a>
+    {% else %}
+    <div class="empty-state">
+        <p>Your cart is empty.</p>
+        <a class="btn-primary" href="{{ url_for('home') }}">Browse the menu</a>
+    </div>
+    {% endif %}
+</section>
+
+{% endblock %}
