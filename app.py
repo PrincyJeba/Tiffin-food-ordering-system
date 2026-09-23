@@ -164,8 +164,7 @@ def place_order():
 
 @app.route("/health")
 def health():
-    logger.info("Health check requested")
-    return {"status": "healthy"}, 200
+    raise Exception("Simulated application failure")
 
 
 @app.route("/version")
