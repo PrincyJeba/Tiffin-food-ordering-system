@@ -11,7 +11,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 app = Flask(__name__)
 app.secret_key = "dev-secret-key-change-in-production"  # fine for a demo project
 
-APP_VERSION = "1.0.0"
+APP_VERSION = "2.0.0"
 
 logging.basicConfig(
     level=logging.INFO,
